@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEMORY_HACK_ACTIVE - Archivo de Memoria</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Consolas', 'Courier New', monospace;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><text y="15" font-size="16" fill="#00FFFF" font-family="monospace">></text></svg>'), auto;
+            overflow: hidden; /* Ocultar barras de scroll */
+        }
+        .neon-cian { color: #00FFFF; }
+        .glitch-frame::before, .glitch-frame::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 20;
+        }
+        .glitch-frame::before {
+            border: 5px solid #00FFFF;
+            animation: pulse-border 3s infinite alternate; /* Animación de pulso */
+        }
+        .glitch-frame::after {
+            border: 5px solid rgba(0, 255, 255, 0.5);
+            transform: scale(1.01);
+            animation: subtle-glitch 0.5s infinite alternate; /* Glitch rápido y sutil */
+        }
+        @keyframes pulse-border {
+            from { opacity: 0.5; box-shadow: 0 0 10px #00FFFF; }
+            to { opacity: 1; box-shadow: 0 0 20px #00FFFF, 0 0 30px #00FFFF; }
+        }
+        @keyframes subtle-glitch {
+            from { transform: translate(1px, 0); }
+            to { transform: translate(-1px, 0); }
+        }
+    </style>
+</head>
+<body class="bg-black text-gray-400 h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="max-w-4xl w-full h-full flex flex-col items-center justify-center relative">
+
+        <div id="image-container" class="relative w-full h-3/4 max-h-[80vh] border-0 overflow-hidden glitch-frame">
+            <img id="memory-image" class="w-full h-full object-contain mx-auto" src="" alt="Archivo de Memoria">
+            
+            <a href="index.html" class="absolute top-4 right-4 text-sm neon-cian border border-neon-cian px-3 py-1 hover:bg-neon-cian hover:text-black transition-colors z-30">
+                [X] CERRAR SESIÓN DE MEMORIA
+            </a>
+        </div>
+
+        <div class="mt-8 p-4 border-2 border-neon-cian bg-gray-900/70 w-full max-w-lg">
+            <p class="text-lg neon-cian font-bold">// LOG DE MEMORIA CRÍTICA</p>
+            <p id="memory-log" class="mt-2 text-base text-white break-words">
+                [CARGANDO DATOS...]
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const fileName = params.get('file');
+            const logMessage = params.get('log');
+            
+            const imageElement = document.getElementById('memory-image');
+            const logElement = document.getElementById('memory-log');
+
+            if (fileName && logMessage) {
+                imageElement.src = fileName;
+                logElement.textContent = logMessage;
+                document.title = logMessage.split(':')[0] + ' ACTIVADO';
+            } else {
+                logElement.textContent = "ERROR: ARCHIVO NO ENCONTRADO. REGRESANDO A CORE.";
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>
