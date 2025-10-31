@@ -36,7 +36,7 @@
 </head>
 <body class="bg-black text-gray-400 min-h-screen flex flex-col items-center justify-start p-4">
     
-    <audio id="love-song" src="joan.mp3" preload="auto" loop></audio>
+    <audio id="love-song" src="Joan.mp3" preload="auto" loop></audio>
     
     <div id="protocol-lock" class="max-w-xl w-full p-6 border-2 border-neon-cian shadow-xl shadow-cyan-900/50">
         <p class="neon-cian text-2xl mb-4">// CORE_CONNECTION_PROTOCOL.V1.0</p>
@@ -300,27 +300,47 @@
         initBackground();
         drawBackground();
         window.addEventListener('resize', initBackground);
-        // --- F. MANEJO DE AUDIO FORZADO POR INTERACCIÓN ---
+
+
+       // ...existing code...
+    // --- F. MANEJO DE AUDIO FORZADO POR INTERACCIÓN ---
     const audioPrompt = document.getElementById('audio-prompt');
     const startAudioBtn = document.getElementById('start-audio-btn');
 
-    // Esta función se activará solo con el CLIC manual del usuario
-    if(startAudioBtn) {
-        startAudioBtn.addEventListener('click', () => {
-            loveSong.play()
-                .then(() => {
-                    // Si la reproducción es exitosa, oculta el mensaje
-                    if(audioPrompt) {
-                    audioPrompt.style.display = 'none';
-                    }
-                })
-                .catch(error => {
-                    // Si hay un error (ej. el archivo mp3 no existe), muestra el error
-                    console.error("Error al reproducir audio:", error);
-                    alert("ERROR DE AUDIO: Archivo joan.mp3 no encontrado o corrupto.");
-                });
+    // debug: detectar errores del elemento audio
+    loveSong.addEventListener('error', () => {
+        console.error('Audio element error:', loveSong.error);
+    });
+
+    // Función segura para intentar reproducir (debe ser llamada desde un gesto de usuario)
+    async function tryPlayAudio() {
+        try {
+            if (!loveSong.src || loveSong.src.trim() === '') throw new Error('No se encontró la fuente de audio (src vacío).');
+            // Ajustes por si el archivo está muted/volume
+            loveSong.muted = false;
+            loveSong.volume = 0.8;
+            loveSong.currentTime = 0;
+            await loveSong.play();
+            if (audioPrompt) audioPrompt.style.display = 'none';
+            console.log('Audio reproducido correctamente.');
+        } catch (error) {
+            console.error('Error al reproducir audio:', error);
+            alert('No se pudo reproducir el audio. Revisa la consola del navegador y verifica que Joan.mp3 exista y se sirva por HTTP.');
+        }
+    }
+
+    if (startAudioBtn) {
+        startAudioBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            tryPlayAudio();
         });
     }
+
+    // Opción adicional: permitir iniciar audio con otro clic (debug)
+    document.addEventListener('keydown', (e) => {
+        if (e.key === ' ') tryPlayAudio();
+    });
+    // ...existing code...
     </script>
 </body>
 </html>
