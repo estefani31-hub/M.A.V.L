@@ -35,13 +35,11 @@
     </style>
 </head>
 <body class="bg-black text-gray-400 min-h-screen flex flex-col items-center justify-start p-4">
-    
-    <audio id="love-song" controls loop>
-    <source src="Joan.mp3" type="audio/mpeg">
-    <source src="Joan.ogg" type="audio/ogg">
-    Tu navegador no soporta el elemento de audio.
-</audio>
-    
+
+    <audio id="love-song" src="Joan.mp3" preload="auto" loop></audio>
+<canvas id="background-canvas"></canvas>
+<button id="iniciar-audio">Reproducir Canción</button>
+
     <div id="protocol-lock" class="max-w-xl w-full p-6 border-2 border-neon-cian shadow-xl shadow-cyan-900/50">
         <p class="neon-cian text-2xl mb-4">// CORE_CONNECTION_PROTOCOL.V1.0</p>
         <p class="mb-4">SYSTEM LOG: <code>[ACCESS_STATUS: DENIED]</code></p>
@@ -345,6 +343,23 @@
         if (e.key === ' ') tryPlayAudio();
     });
     // ...existing code...
+    const audio = document.getElementById('love-song');
+const startButton = document.getElementById('iniciar-audio');
+
+startButton.addEventListener('click', () => {
+    // 1. Intentar reproducir el audio del elemento HTML
+    audio.play()
+        .then(() => {
+        console.log("Audio se está reproduciendo.");
+             // Si estás usando Web Audio API, inicializa el AudioContext aquí:
+             // const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+             // ... y conecta el resto de tu código de canvas/visualizador.
+        })
+        .catch(error => {
+             // Esto captura errores si el navegador bloquea la reproducción
+        console.error("Error al intentar reproducir el audio:", error);
+        });
+}, { once: true }); // El { once: true } asegura que solo se haga clic una vez.
     </script>
 </body>
 </html>
