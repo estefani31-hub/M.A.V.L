@@ -36,7 +36,11 @@
 </head>
 <body class="bg-black text-gray-400 min-h-screen flex flex-col items-center justify-start p-4">
     
-    <audio id="love-song" src="Joan.mp3" preload="auto" loop></audio>
+    <audio id="love-song" controls loop>
+    <source src="Joan.mp3" type="audio/mpeg">
+    <source src="Joan.ogg" type="audio/ogg">
+    Tu navegador no soporta el elemento de audio.
+</audio>
     
     <div id="protocol-lock" class="max-w-xl w-full p-6 border-2 border-neon-cian shadow-xl shadow-cyan-900/50">
         <p class="neon-cian text-2xl mb-4">// CORE_CONNECTION_PROTOCOL.V1.0</p>
