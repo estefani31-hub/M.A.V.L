@@ -1,0 +1,66 @@
+/* ======================================= */
+/* Archivo: style.css                      */
+/* Estilos, fuentes y animaciones          */
+/* ======================================= */
+
+/* 1. Estilos Base y Fuentes */
+body {
+    font-family: 'Consolas', 'Courier New', monospace;
+    background-color: black;
+}
+/* Cursor de terminal solo para escritorio */
+.custom-cursor {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><text y="15" font-size="16" fill="#00FFFF" font-family="monospace">></text></svg>'), auto;
+}
+.neon-cian { color: #00FFFF; }
+.bg-neon-cian { background-color: #00FFFF; }
+
+/* 2. Estilos del Canvas de Fondo */
+#background-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Enviar al fondo */
+    opacity: 0.1; /* Súper sutil */
+}
+
+/* 3. Animaciones */
+
+/* Animación para error de Passcode (Shake) */
+.input-error { 
+    animation: shake 0.5s; 
+    border-color: red !important; 
+}
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+/* Estilo para el efecto de Glitch del texto (Memory Core) */
+.glitch-text {
+    animation: glitch 1.5s linear infinite;
+}
+@keyframes glitch {
+    2%,64% { transform: translate(2px, 0) skew(0deg); }
+    4%,60% { transform: translate(-2px, 0) skew(0deg); }
+    62% { transform: translate(0, 0) skew(5deg); }
+}
+
+/* MEJORA MOVIL: Hacer la grilla de la galería más densa en móviles */
+@media (max-width: 640px) {
+    #memory-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr)); /* 4 columnas en móvil */
+        gap: 0.5rem; /* Reducir el espacio para que quepan */
+    }
+}

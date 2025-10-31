@@ -3,47 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CORE_CONNECTION_PROTOCOL.V1.0 - ACCESO CONCEDIDO</title>
+    <title>CORE_CONNECTION_PROTOCOL.V2.0 - ACCESO DENEGADO</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Estilos de ingeniero: Consola, sin cursilería */
-        body {
-            font-family: 'Consolas', 'Courier New', monospace;
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><text y="15" font-size="16" fill="#00FFFF" font-family="monospace">></text></svg>'), auto;
-            overflow-y: auto; /* Permitir scroll si el contenido es largo */
-        }
-        .neon-cian { color: #00FFFF; }
-        .bg-neon-cian { background-color: #00FFFF; }
-        .input-error { animation: shake 0.5s; border-color: red !important; }
-        @keyframes shake {
-            0% { transform: translate(1px, 1px) rotate(0deg); } 10% { transform: translate(-1px, -2px) rotate(-1deg); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); } 30% { transform: translate(3px, 2px) rotate(0deg); }
-            40% { transform: translate(1px, -1px) rotate(1deg); } 50% { transform: translate(-1px, 2px) rotate(-1deg); }
-            60% { transform: translate(-3px, 1px) rotate(0deg); } 70% { transform: translate(3px, 1px) rotate(-1deg); }
-            80% { transform: translate(-1px, -1px) rotate(1deg); } 90% { transform: translate(1px, 2px) rotate(0deg); }
-            100% { transform: translate(1px, -2px) rotate(-1deg); }
-        }
-        .glitch-text { animation: glitch 1.5s linear infinite; }
-        @keyframes glitch {
-            2%,64% { transform: translate(2px, 0) skew(0deg); } 4%,60% { transform: translate(-2px, 0) skew(0deg); }
-            62% { transform: translate(0, 0) skew(5deg); }
-        }
-        /* Estilos para el Canvas de Fondo */
-        #background-canvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.1;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-black text-gray-400 min-h-screen flex flex-col items-center justify-start p-4">
-
-    <audio id="love-song" src="Joan.mp3" preload="auto" loop></audio>
-<canvas id="background-canvas"></canvas>
-<button id="iniciar-audio">Reproducir Canción</button>
+<body class="bg-black text-gray-400 min-h-screen flex flex-col items-center justify-start p-4 custom-cursor">
+    
+    <audio id="love-song" src="All of Me.mp3.mp3" preload="auto" loop></audio>
+    
+    <canvas id="background-canvas"></canvas>
 
     <div id="protocol-lock" class="max-w-xl w-full p-6 border-2 border-neon-cian shadow-xl shadow-cyan-900/50">
-        <p class="neon-cian text-2xl mb-4">// CORE_CONNECTION_PROTOCOL.V1.0</p>
+        <p class="neon-cian text-2xl mb-4">// CORE_CONNECTION_PROTOCOL.V2.0</p>
         <p class="mb-4">SYSTEM LOG: <code>[ACCESS_STATUS: DENIED]</code></p>
-        <p class="mb-6">MOTIVO: SE REQUIERE AUTENTICACIÓN DE ALTO NIVEL PARA INICIAR EL PROTOCOLO. EL RECURSO CRÍTICO HA SIDO BLOQUEADO.</p>
+        <p class="mb-6">MOTIVO: SE REQUIERE AUTENTICACIÓN DE ALTO NIVEL PARA INICIAR EL PROTOCOLO.</p>
         
         <div id="auth-area">
             <label for="passcode" class="block mb-2 neon-cian">INSERTE EL PASSCODE DE CONEXIÓN VITAL:</label>
@@ -56,16 +29,14 @@
     </div>
 
     <div id="protocol-unlocked" class="hidden w-full max-w-6xl grid grid-cols-1 lg:grid-cols-3 gap-8 p-6">
-        <div id="protocol-unlocked" class="hidden w-full max-w-6xl grid grid-cols-1 lg:grid-cols-3 gap-8 p-6">
         
-        <div id="audio-prompt" class="col-span-full mb-4 p-3 bg-red-900/50 border border-red-500 text-red-300 flex justify-between items-center cursor-pointer">
-            <span class="font-bold">// NOTIFICACIÓN CRÍTICA: Se requiere confirmación manual para iniciar el flujo de audio.</span>
-            <span id="start-audio-btn" class="neon-cian border border-neon-cian px-3 py-1 hover:bg-neon-cian hover:text-black transition-colors">
+        <div id="audio-prompt" class="col-span-full mb-4 p-3 bg-red-900/50 border border-red-500 text-red-300 flex flex-col sm:flex-row justify-between items-center cursor-pointer">
+            <span class="font-bold">// NOTIFICACIÓN CRÍTICA: Se requiere confirmación para iniciar el audio_flow.</span>
+            <span id="start-audio-btn" class="neon-cian border border-neon-cian px-3 py-1 hover:bg-neon-cian hover:text-black transition-colors mt-2 sm:mt-0">
                 [CLICK] INICIAR AUDIO_FLOW
             </span>
         </div>
         
-        <div class="col-span-1 border-2 border-neon-cian p-4 h-full order-1 lg:order-1">
         <div class="col-span-1 border-2 border-neon-cian p-4 h-full order-1 lg:order-1"> 
             <p class="neon-cian text-xl mb-4">// SYSTEM_LOGS & METRICS</p>
             <div class="space-y-3 text-sm">
@@ -79,10 +50,10 @@
 
         <div class="col-span-1 lg:col-span-2 flex flex-col items-center order-2 lg:order-2">
             
-            <div id="photo-area" class="w-full max-w-sm border-4 border-neon-cian shadow-2xl shadow-cyan-900/80 relative overflow-hidden h-64" style="cursor: pointer;">
+            <div id="photo-area" class="w-full max-w-sm border-4 border-neon-cian shadow-2xl shadow-cyan-900/80 relative overflow-hidden aspect-square" style="cursor: pointer;">
                 <img id="main-photo" src="6.jpg" alt="Foto principal de la conexión" class="w-full h-full object-contain">
                 <div class="absolute inset-0 bg-black opacity-30 hover:opacity-10 transition-opacity duration-500 flex items-center justify-center">
-                    <span class="neon-cian text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">CLICK PARA EJECUTAR 'LOVE_BOMB'</span>
+                    <span class="neon-cian text-xl text-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 p-4">CLICK PARA EJECUTAR 'LOVE_BOMB'</span>
                 </div>
                 <canvas id="love-canvas" class="absolute inset-0 z-10 pointer-events-none"></canvas>
             </div>
@@ -95,7 +66,7 @@
             </div>
             
             <div class="mt-12 w-full p-4 border-2 border-gray-700 bg-gray-900/50">
-                <p class="text-xl neon-cian font-bold mb-4">// ACCESS_LOGS: CRITICAL_MEMORY_BANK</p>
+                <p class="text-xl neon-cian font-bold mb-4">// ACCESS_LOGS: CRITICAL_MEMORY_BANK (Toca para restaurar)</p>
                 
                 <div id="memory-grid" class="grid grid-cols-3 sm:grid-cols-4 gap-4">
                     </div>
@@ -103,263 +74,6 @@
         </div>
     </div>
     
-    <script>
-        // --- A. DEFINICIÓN DE CONSTANTES Y ELEMENTOS ---
-        const CORRECT_PASSCODE = "piojito";
-        const lockScreen = document.getElementById('protocol-lock');
-        const unlockScreen = document.getElementById('protocol-unlocked');
-        const diagnosticsButton = document.getElementById('run-diagnostics');
-        const passcodeField = document.getElementById('passcode');
-        const errorMessage = document.getElementById('error-message');
-        const loveSong = document.getElementById('love-song');
-        const photoArea = document.getElementById('photo-area');
-        const canvas = document.getElementById('love-canvas');
-        const ctx = canvas.getContext('2d');
-        const memoryGrid = document.getElementById('memory-grid');
-
-        // Definición de las 12 memorias (Ajusta las descripciones y archivos)
-        const memoryBank = [
-            { file: "1.jpg", log: "LOG_001: Nos miramos peor es nada." },
-            { file: "2.png", log: "LOG_002: Se vé bien mamacita rica en esta foto." }, // <--- Usa .png si es tu caso
-            { file: "3.jpg", log: "LOG_003: Mi anillo de matrimonio, enana?." },
-            { file: "4.jpg", log: "LOG_004: Cara de que hizo bien su trabajo." },
-            { file: "5.jpg", log: "LOG_005: Mira con deseo jajaja." },
-            { file: "6.jpg", log: "LOG_006: Mamacitas ricas." },
-            { file: "7.jpg", log: "LOG_007: La voy a colgar, enana." },
-            { file: "8.jpg", log: "LOG_008: Cara de que necesitamos cervezas." },
-            { file: "9.jpg", log: "LOG_009: Rica, ni en mil vidas encontraía a alguien como yo 😏." },
-            { file: "10.jpg", log: "LOG_010: No la culpo por querer volver conmigo ajja." },
-            { file: "11.jpg", log: "LOG_011: Cara de que quería hacer otra cosa, no ir a la velada." },
-            { file: "12.jpg", log: "LOG_012: Cosa rica, cosa bien hecha, cosa hecha con amor. (la mirada con deseo)." },
-        ];
-
-
-        // --- B. LÓGICA DE AUTENTICACIÓN (LOGIN) ---
-        diagnosticsButton.addEventListener('click', () => {
-            if (passcodeField.value.trim().toLowerCase() === CORRECT_PASSCODE) {
-                lockScreen.classList.add('hidden');
-                unlockScreen.classList.remove('hidden'); 
-                
-                loadMemoryGrid();
-            } else {
-                errorMessage.classList.remove('hidden');
-                passcodeField.classList.add('input-error');
-                setTimeout(() => {
-                    passcodeField.classList.remove('input-error');
-                    errorMessage.classList.add('hidden');
-                }, 2000);
-            }
-        });
-
-        passcodeField.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                diagnosticsButton.click();
-            }
-        });
-
-
-        // --- C. LÓGICA DE ANIMACIÓN LOVE_BOMB (ON_CLICK) ---
-        let particles = [];
-        const loveMessages = ["TE AMO", "SIEMPRE TE ELIJO A TI"];
-        
-        class Particle { /* (clase Particle como antes) */
-            constructor(x, y, message) {
-                this.x = x; this.y = y; this.vx = (Math.random() - 0.5) * 6; this.vy = (Math.random() - 0.5) * 6;
-                this.alpha = 1; this.message = message;
-                this.color = (message === 0 || message === 1) ? '#00FFFF' : '#00FFFF';
-                this.size = (message === 0 || message === 1) ? 10 : 22;
-                this.isText = isNaN(this.message);
-                this.glitchOffset = Math.random() * 5; this.glitchSpeed = Math.random() * 0.1;
-            }
-            update() {
-                this.x += this.vx; this.y += this.vy; this.alpha -= 0.02;
-            }
-            draw() {
-                ctx.globalAlpha = this.alpha; ctx.fillStyle = this.color;
-                if (this.isText) {
-                    const offsetX = Math.sin(Date.now() * this.glitchSpeed) * this.glitchOffset;
-                    const offsetY = Math.cos(Date.now() * this.glitchSpeed) * this.glitchOffset;
-                    ctx.font = 'bold 24px Consolas';
-                    ctx.fillText(this.message, this.x + offsetX, this.y + offsetY);
-                } else {
-                    ctx.font = '12px Consolas';
-                    ctx.fillText(this.message, this.x, this.y);
-                }
-                ctx.globalAlpha = 1;
-            }
-        }
-
-        function animate() { /* (función animate como antes) */
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.3)'; ctx.fillRect(0, 0, canvas.width, canvas.height); 
-            for (let i = particles.length - 1; i >= 0; i--) {
-                particles[i].update(); particles[i].draw();
-                if (particles[i].alpha <= 0.05) { particles.splice(i, 1); }
-            }
-            if (particles.length > 0) { requestAnimationFrame(animate); }
-        }
-        
-        function createLoveBomb(e) {
-            canvas.width = photoArea.clientWidth; canvas.height = photoArea.clientHeight;
-            const centerX = canvas.width / 2; const centerY = canvas.height / 2;
-            for (let i = 0; i < 300; i++) {
-                const message = Math.random() > 0.5 ? 1 : 0; particles.push(new Particle(centerX, centerY, message));
-            }
-            for (let i = 0; i < 7; i++) {
-                const message = loveMessages[Math.floor(Math.random() * loveMessages.length)];
-                particles.push(new Particle(centerX, centerY, message));
-            }
-            animate();
-        }
-
-        photoArea.addEventListener('click', createLoveBomb);
-
-        // --- D. LÓGICA DE GALERÍA (MEMORY CORE) ---
-        function loadMemoryGrid() {
-            memoryGrid.innerHTML = ''; 
-            memoryBank.forEach((item, index) => {
-                const dataUnit = document.createElement('div');
-                dataUnit.className = 'data-unit relative aspect-square border border-gray-700 hover:border-neon-cian transition-all duration-300 overflow-hidden group cursor-pointer'; 
-                
-                // Abre la segunda página con los datos de la foto
-                dataUnit.addEventListener('click', () => {
-                    const params = new URLSearchParams();
-                    params.append('file', item.file);
-                    params.append('log', item.log);
-                    window.location.href = `memory_hack.html?${params.toString()}`;
-                });
-
-                const img = document.createElement('img');
-                img.src = item.file;
-                img.alt = `Archivo de memoria ${index + 1}`;
-                img.className = 'w-full h-full object-cover transition-opacity duration-500 opacity-20 group-hover:opacity-100'; 
-
-                const overlay = document.createElement('div');
-                // IMPORTANTE: Asegúrate de que el nombre del archivo en el overlay coincida con la extensión real (.png o .jpg)
-                overlay.className = 'absolute inset-0 bg-black/90 flex flex-col items-center justify-center text-sm neon-cian p-2 opacity-100 group-hover:opacity-0 transition-opacity duration-500 glitch-text';
-                overlay.innerHTML = `FILE_${index + 1}.${item.file.split('.').pop()}<br/>[STATUS: OFFLINE]`; 
-
-                const logTooltip = document.createElement('div');
-                logTooltip.className = 'absolute bottom-0 left-0 w-full bg-neon-cian text-black font-bold text-xs text-center p-1 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300';
-                logTooltip.textContent = item.log; 
-
-                dataUnit.append(img, overlay, logTooltip);
-                memoryGrid.appendChild(dataUnit);
-            });
-        }
-        
-        // --- E. LA MAGIA: ANIMACIÓN DE FONDO (NETWORK FLOW) ---
-        const bgCanvas = document.getElementById('background-canvas');
-        const bgCtx = bgCanvas.getContext('2d');
-
-        let particlesBg = [];
-        const PARTICLE_COUNT = 50; 
-
-        function initBackground() {
-            bgCanvas.width = window.innerWidth;
-            bgCanvas.height = window.innerHeight;
-
-            particlesBg = []; // Resetear las partículas al redimensionar
-            for (let i = 0; i < PARTICLE_COUNT; i++) {
-                particlesBg.push({
-                    x: Math.random() * bgCanvas.width, y: Math.random() * bgCanvas.height,
-                    vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5,
-                    radius: Math.random() * 1.5 + 1, color: '#00FFFF' 
-                });
-            }
-        }
-
-        function drawBackground() {
-            bgCtx.fillStyle = 'rgba(0, 0, 0, 1)'; 
-            bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
-
-            for (let i = 0; i < particlesBg.length; i++) {
-                let p = particlesBg[i];
-                p.x += p.vx; p.y += p.vy;
-                if (p.x < 0 || p.x > bgCanvas.width) p.x = (p.x < 0) ? bgCanvas.width : 0;
-                if (p.y < 0 || p.y > bgCanvas.height) p.y = (p.y < 0) ? bgCanvas.height : 0;
-
-                bgCtx.beginPath();
-                bgCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2, false);
-                bgCtx.fillStyle = p.color; bgCtx.fill();
-
-                for (let j = i + 1; j < particlesBg.length; j++) {
-                    let p2 = particlesBg[j];
-                    let dist = Math.sqrt(Math.pow(p.x - p2.x, 2) + Math.pow(p.y - p2.y, 2));
-
-                    if (dist < 100) {
-                        bgCtx.beginPath();
-                        bgCtx.strokeStyle = 'rgba(0, 255, 255, ' + (1 - dist / 100) + ')';
-                        bgCtx.lineWidth = 0.5;
-                        bgCtx.moveTo(p.x, p.y);
-                        bgCtx.lineTo(p2.x, p2.y);
-                        bgCtx.stroke();
-                    }
-                }
-            }
-            requestAnimationFrame(drawBackground);
-        }
-
-        initBackground();
-        drawBackground();
-        window.addEventListener('resize', initBackground);
-
-
-       // ...existing code...
-    // --- F. MANEJO DE AUDIO FORZADO POR INTERACCIÓN ---
-    const audioPrompt = document.getElementById('audio-prompt');
-    const startAudioBtn = document.getElementById('start-audio-btn');
-
-    // debug: detectar errores del elemento audio
-    loveSong.addEventListener('error', () => {
-        console.error('Audio element error:', loveSong.error);
-    });
-
-    // Función segura para intentar reproducir (debe ser llamada desde un gesto de usuario)
-    async function tryPlayAudio() {
-        try {
-            if (!loveSong.src || loveSong.src.trim() === '') throw new Error('No se encontró la fuente de audio (src vacío).');
-            // Ajustes por si el archivo está muted/volume
-            loveSong.muted = false;
-            loveSong.volume = 0.8;
-            loveSong.currentTime = 0;
-            await loveSong.play();
-            if (audioPrompt) audioPrompt.style.display = 'none';
-            console.log('Audio reproducido correctamente.');
-        } catch (error) {
-            console.error('Error al reproducir audio:', error);
-            alert('No se pudo reproducir el audio. Revisa la consola del navegador y verifica que Joan.mp3 exista y se sirva por HTTP.');
-        }
-    }
-
-    if (startAudioBtn) {
-        startAudioBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            tryPlayAudio();
-        });
-    }
-
-    // Opción adicional: permitir iniciar audio con otro clic (debug)
-    document.addEventListener('keydown', (e) => {
-        if (e.key === ' ') tryPlayAudio();
-    });
-    // ...existing code...
-    const audio = document.getElementById('love-song');
-const startButton = document.getElementById('iniciar-audio');
-
-startButton.addEventListener('click', () => {
-    // 1. Intentar reproducir el audio del elemento HTML
-    audio.play()
-        .then(() => {
-        console.log("Audio se está reproduciendo.");
-             // Si estás usando Web Audio API, inicializa el AudioContext aquí:
-             // const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-             // ... y conecta el resto de tu código de canvas/visualizador.
-        })
-        .catch(error => {
-             // Esto captura errores si el navegador bloquea la reproducción
-        console.error("Error al intentar reproducir el audio:", error);
-        });
-}, { once: true }); // El { once: true } asegura que solo se haga clic una vez.
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
