@@ -36,12 +36,8 @@
 </head>
 <body class="bg-black text-gray-400 min-h-screen flex flex-col items-center justify-start p-4">
     
-    <audio id="love-song" controls loop>
-    <source src="joan.mp3" type="audio/mpeg">
-    <source src="joan.ogg" type="audio/ogg">
-    Tu navegador no soporta el elemento de audio.
-</audio>
-
+    <audio id="love-song" src="joan.mp3" preload="auto" loop></audio>
+    
     <div id="protocol-lock" class="max-w-xl w-full p-6 border-2 border-neon-cian shadow-xl shadow-cyan-900/50">
         <p class="neon-cian text-2xl mb-4">// CORE_CONNECTION_PROTOCOL.V1.0</p>
         <p class="mb-4">SYSTEM LOG: <code>[ACCESS_STATUS: DENIED]</code></p>
@@ -58,7 +54,16 @@
     </div>
 
     <div id="protocol-unlocked" class="hidden w-full max-w-6xl grid grid-cols-1 lg:grid-cols-3 gap-8 p-6">
+        <div id="protocol-unlocked" class="hidden w-full max-w-6xl grid grid-cols-1 lg:grid-cols-3 gap-8 p-6">
         
+        <div id="audio-prompt" class="col-span-full mb-4 p-3 bg-red-900/50 border border-red-500 text-red-300 flex justify-between items-center cursor-pointer">
+            <span class="font-bold">// NOTIFICACIÓN CRÍTICA: Se requiere confirmación manual para iniciar el flujo de audio.</span>
+            <span id="start-audio-btn" class="neon-cian border border-neon-cian px-3 py-1 hover:bg-neon-cian hover:text-black transition-colors">
+                [CLICK] INICIAR AUDIO_FLOW
+            </span>
+        </div>
+        
+        <div class="col-span-1 border-2 border-neon-cian p-4 h-full order-1 lg:order-1">
         <div class="col-span-1 border-2 border-neon-cian p-4 h-full order-1 lg:order-1"> 
             <p class="neon-cian text-xl mb-4">// SYSTEM_LOGS & METRICS</p>
             <div class="space-y-3 text-sm">
@@ -132,8 +137,6 @@
             if (passcodeField.value.trim().toLowerCase() === CORRECT_PASSCODE) {
                 lockScreen.classList.add('hidden');
                 unlockScreen.classList.remove('hidden'); 
-                
-                loveSong.play().catch(error => { console.error("Audio block."); });
                 
                 loadMemoryGrid();
             } else {
@@ -297,6 +300,27 @@
         initBackground();
         drawBackground();
         window.addEventListener('resize', initBackground);
+        // --- F. MANEJO DE AUDIO FORZADO POR INTERACCIÓN ---
+    const audioPrompt = document.getElementById('audio-prompt');
+    const startAudioBtn = document.getElementById('start-audio-btn');
+
+    // Esta función se activará solo con el CLIC manual del usuario
+    if(startAudioBtn) {
+        startAudioBtn.addEventListener('click', () => {
+            loveSong.play()
+                .then(() => {
+                    // Si la reproducción es exitosa, oculta el mensaje
+                    if(audioPrompt) {
+                    audioPrompt.style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    // Si hay un error (ej. el archivo mp3 no existe), muestra el error
+                    console.error("Error al reproducir audio:", error);
+                    alert("ERROR DE AUDIO: Archivo joan.mp3 no encontrado o corrupto.");
+                });
+        });
+    }
     </script>
 </body>
 </html>
